@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { db } from "./firebase";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,6 +24,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("firebase admin db", db);
+  try {
+    const users_collection = db.collection("users");
+    console.log("successfully read from firestore", users_collection);
+
+    // users_collection.get().then((querySnapshot) => {
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(doc.id, " => ", doc.data());
+    //   });
+    // });
+  } catch (error) {
+    console.log("error writing to firestore", error);
+  }
+
   return (
     <html lang="en">
       <body
